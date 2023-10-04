@@ -1,0 +1,91 @@
+#This file is not an executable script, because fdisk may warn you about existing partitions, so you need to go through fdisk manually
+
+
+WARNING! WARNING! WARNING! WARNING! WARNING! 
+I assume the SD card is linked as /dev/sdb.
+Don't execute the script before checking the SD card path or you can destroy your data.
+WARNING! WARNING! WARNING! WARNING! WARNING! 
+
+
+SOURCE_CODE_DIRECTORY=/home/user/android-11.0.0_r48/
+
+sudo umount /dev/sdb*
+sudo wipefs -a /dev/sdb
+sudo fdisk /dev/sdb
+
+### fdisk instruction start
+Welcome to fdisk (util-linux 2.37.2).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+Device does not contain a recognized partition table.
+Created a new DOS disklabel with disk identifier 0x179fb9bc.
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): 
+Using default response p.
+Partition number (1-4, default 1): 
+First sector (2048-61022207, default 2048): 
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-61022207, default 61022207): +128M
+Created a new partition 1 of type 'Linux' and of size 128 MiB.
+Command (m for help): a
+Selected partition 1
+The bootable flag on partition 1 is enabled now.
+Command (m for help): t
+Selected partition 1
+Hex code or alias (type L to list all): 0c
+Changed type of partition 'Linux' to 'W95 FAT32 (LBA)'.
+Command (m for help): n
+Partition type
+   p   primary (1 primary, 0 extended, 3 free)
+   e   extended (container for logical partitions)
+Select (default p): 
+Using default response p.
+Partition number (2-4, default 2): 
+First sector (264192-61022207, default 264192): 
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (264192-61022207, default 61022207): +2G
+Created a new partition 2 of type 'Linux' and of size 2 GiB.
+Command (m for help): n
+Partition type
+   p   primary (2 primary, 0 extended, 2 free)
+   e   extended (container for logical partitions)
+Select (default p): 
+Using default response p.
+Partition number (3,4, default 3): 
+First sector (4458496-61022207, default 4458496): 
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (4458496-61022207, default 61022207): +128M
+Created a new partition 3 of type 'Linux' and of size 128 MiB.
+Command (m for help): n
+Partition type
+   p   primary (3 primary, 0 extended, 1 free)
+   e   extended (container for logical partitions)
+Select (default e): p
+Selected partition 4
+First sector (4720640-61022207, default 4720640): 
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (4720640-61022207, default 61022207):
+Created a new partition 4 of type 'Linux' and of size 26,8 GiB.
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+### fdisk instruction end
+
+
+sudo mkdosfs -F 32 /dev/sdb1
+sudo mkfs.ext4 -L userdata /dev/sdb4
+sudo mkdir /mnt/p1
+sudo mount /dev/sdb1 /mnt/p1
+sudo mkdir /mnt/p1/overlays
+
+cd $SOURCE_CODE_DIRECTORY
+sudo cp device/arpi/rpi4/boot/* /mnt/p1
+sudo cp kernel/arpi/arch/arm64/boot/Image.gz /mnt/p1
+sudo cp kernel/arpi/arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dtb /mnt/p1
+sudo cp kernel/arpi/arch/arm/boot/dts/overlays/vc4-kms-v3d-pi4.dtbo /mnt/p1/overlays/
+sudo cp out/target/product/rpi4/ramdisk.img /mnt/p1
+sudo umount /mnt/p1
+sudo rm -rf /mnt/p1
+sudo dd if=out/target/product/rpi4/system.img of=/dev/sdb2 bs=1M status=progress
+sudo dd if=out/target/product/rpi4/vendor.img of=/dev/sdb3 bs=1M status=progress
+sudo umount /dev/sdb*
