@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
   <remote name="arpi" fetch="https://github.com/android-rpi"/>
+  <remote name="grapeup" fetch="https://github.com/grapeup"/>
 
   <remove-project name="platform/frameworks/av"/>
   <project path="frameworks/av" name="frameworks_av" revision="arpi-11" remote="arpi"/>
@@ -13,7 +14,18 @@
 
   <project path="kernel/arpi" name="kernel_arpi" revision="arpi-5.4.y" remote="arpi"/>
   <project path="hardware/arpi" name="hardware_arpi" revision="arpi-11" remote="arpi"/>
-  <project path="device/arpi/rpi4" name="device_arpi_rpi4" revision="arpi-11" remote="arpi"/>
 
   <project path="vendor/arpi/RpLauncher" name="RpLauncher" revision="arpi-11" remote="arpi"/>
+
+  <remove-project name="platform/platform_testing"/>
+  <project path="platform_testing" name="aaos_platform_testing" revision="android-11.0.0_r48" remote="grapeup"/>
+  <remove-project name="platform/system/bt"/>
+  <project path="system/bt" name="aaos_system_bt" revision="android-11.0.0_r48" remote="grapeup"/>
+  <remove-project name="platform/hardware/interfaces"/>
+  <project path="system/bt" name="aaos_hardware_interfaces" revision="android-11.0.0_r48" remote="grapeup"/>
+  
+  <project path="device/arpi/rpi4" name="aaos_11_device_arpi_rpi4" revision="android-11.0.0_r48" remote="grapeup"/>
+
+  <project path="packages/apps/Car/AOSPHost" name="aaos_car_aosp_host" remote="grapeup" revision="android-13.0" />
+  
 </manifest>
