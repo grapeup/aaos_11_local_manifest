@@ -18,11 +18,11 @@
   <project path="vendor/arpi/RpLauncher" name="RpLauncher" revision="arpi-11" remote="arpi"/>
 
   <remove-project name="platform/platform_testing"/>
-  <project path="platform_testing" name="aaos_platform_testing" revision="android-11.0.0_r48" remote="grapeup"/>
+  <project path="platform_testing" name="aaos_platform_testing" revision="android11-platform-release" remote="grapeup"/>
   <remove-project name="platform/system/bt"/>
-  <project path="system/bt" name="aaos_system_bt" revision="android-11.0.0_r48" remote="grapeup"/>
+  <project path="system/bt" name="aaos_system_bt" revision="android11-gsi" remote="grapeup"/>
   <remove-project name="platform/hardware/interfaces"/>
-  <project path="system/bt" name="aaos_hardware_interfaces" revision="android-11.0.0_r48" remote="grapeup"/>
+  <project path="system/bt" name="aaos_hardware_interfaces" revision="android11-platform-release" remote="grapeup"/>
   
   <project path="device/arpi/rpi4" name="aaos_11_device_arpi_rpi4" revision="android-11.0.0_r48" remote="grapeup"/>
 
