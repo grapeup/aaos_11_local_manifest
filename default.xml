@@ -2,6 +2,7 @@
 <manifest>
   <remote name="arpi" fetch="https://github.com/android-rpi"/>
   <remote name="grapeup" fetch="https://github.com/grapeup"/>
+  <remote name="lineage-rpi" fetch="https://github.com/lineage-rpi"/>
 
   <remove-project name="platform/frameworks/av"/>
   <project path="frameworks/av" name="frameworks_av" revision="arpi-11" remote="arpi"/>
@@ -27,5 +28,7 @@
   <project path="device/arpi/rpi4" name="aaos_11_device_arpi_rpi4" revision="android-11.0.0_r48" remote="grapeup"/>
 
   <project path="packages/apps/Car/AOSPHost" name="aaos_car_aosp_host" remote="grapeup" revision="android-13.0" />
+
+  <project path="packages/lineage_android_external_v4l-utils" remote="lineage-rpi" name="android_external_v4l-utils" revision="lineage-20.0" />
   
 </manifest>
